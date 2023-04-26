@@ -12,6 +12,6 @@ export class SnapController {
       body: JSON.stringify(body),
       headers: {'Content-Type': 'application/json'},
     });
-    const data = await response.json();
+    await response.json();
   }
 }
