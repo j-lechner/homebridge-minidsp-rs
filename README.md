@@ -16,10 +16,7 @@ This Homebridge plugin allows you to change the volume, input source, DSP preset
 
 ## Architecture
 
-iDevice -> HomeKit
-Homebridge with this plugin -> REST
-miniDSP-RS -> USB
-miniDSP Flex
+![Architecture from iDevice to miniDPS Flex](architecture.svg)
 
 ## Setup
 
