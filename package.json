@@ -1,9 +1,8 @@
 {
-  "private": true,
   "displayName": "Homebridge MiniDSP RS",
   "name": "homebridge-minidsp-rs",
   "version": "1.5.0",
-  "description": "Control your MiniDSP Flex via Homebridge.",
+  "description": "Control your miniDSP Flex from your iPhone via Homebridge",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
