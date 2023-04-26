@@ -1,4 +1,51 @@
+# Homebridge Remote Control for miniDSP Flex
 
+Control your miniDSP Flex through your Apple devices
+
+## Screenshots
+
+(1) Volume, Input source
+(2) DIRAC on/off, DSP preset
+
+## Features
+
+* Absolute volume control, benefit
+* Give each input source a telling name, benefit
+* Individual gain per input source, benefit
+* Select each of DSP presets and assign them a telling name, benefit
+* Turn DIRAC on and off
+
+## Architecture
+
+iDevice -> HomeKit
+Homebridge with this plugin -> REST
+miniDSP-RS -> USB
+miniDSP Flex
+
+## Setup
+
+* [Install miniDSP RS](https://github.com/mrene/minidsp-rs/releases) on a machine connected to your miniDSP Flex
+* Run miniDSP RS, e.g. type `minidspd.exe -v` in the Windows Command Prompt
+* Install this plugin in homebridge
+* Configure this plugin
+* * Set `miniDSPServerURL` to the IP of the machine running miniDSP RS, e.g. `http://192.168.178.123:5380`
+* * Change `name` and `dspName` to your liking ... -> DIRAC -10db
+* * TODO: maximumDSPVolume and minimumDSPVolume
+* * Under `inputs` remove the inputs you don't need and for the remaining, change the `displayName` and `gain` to your liking
+* * Under `presets` remove the presets you don't need and for the remaining, change the `displayName` to your liking
+
+
+## Notes
+
+* Plugin accepts changes even if miniDSP is not reachable (e.g. when it is still powering up) and applies them as soon as available again.
+* Plugin assumes it is in charge, meaning any changes done directly on the miniDSP or via the infraed control will be overriden (eventually)
+
+
+## Thanks
+
+[miniDSP RS](https://github.com/mrene/minidsp-rs)
+
+<!-- 
 <p align="center">
 
 <img src="https://github.com/homebridge/branding/raw/master/logos/homebridge-wordmark-logo-vertical.png" width="150">
@@ -166,4 +213,4 @@ Users can then install the  *beta* version by appending `@beta` to the install c
 sudo npm install -g homebridge-example-plugin@beta
 ```
 
-
+ -->

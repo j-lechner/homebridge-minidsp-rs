@@ -1,0 +1,72 @@
+{
+    "bridge": {
+        "name": "DevelopmentLocal",
+        "username": "CC:22:3D:E3:CE:40",
+        "port": 51050,
+        "pin": "111-22-333"
+    },
+    "description": "Development",
+    "platforms": [
+        {
+            "name": "Config",
+            "port": 8581,
+            "platform": "config"
+        },
+        {
+            "name": "Stereo Dev",
+            "dspName": "DSP Dev",
+            "platform": "MiniDSPHomebridgePlugin",
+            "miniDSPServerURL": "http://192.168.178.53:5380",
+            "volumeControl": {
+                "maximumDSPVolume": -10,
+                "minimumDSPVolume": -80
+            },
+            "inputs": [
+                {
+                    "displayName": "Streamer",
+                    "source": "Usb",
+                    "gain": 0
+                },
+                {
+                    "displayName": "Projector",
+                    "source": "Toslink",
+                    "gain": 6
+                },
+                {
+                    "displayName": "Vinyl",
+                    "source": "Analog",
+                    "gain": 10
+                },
+                {
+                    "displayName": "Vinyl Multiroom",
+                    "source": "Usb",
+                    "gain": 6
+                },
+                {
+                    "displayName": "MiniDisc",
+                    "source": "Spdif",
+                    "gain": 0
+                }
+            ],
+            "presets": [
+                {
+                    "displayName": "Default",
+                    "preset": 1
+                },
+                {
+                    "displayName": "Bass +3db",
+                    "preset": 2
+                },
+                {
+                    "displayName": "Bass +6db",
+                    "preset": 3
+                },
+                {
+                    "displayName": "NAD Curve",
+                    "preset": 4
+                }
+            ]
+        }
+    ],
+    "accessories": []
+}
