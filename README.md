@@ -1,6 +1,8 @@
-# Homebridge Remote Control for miniDSP Flex
+# Control your miniDSP Flex from your iPhone
 
-Control your miniDSP Flex through your Apple devices
+[miniDSP Flex](https://www.minidsp.com/products/minidsp-in-a-box/flex) is a versatile audio processor that can be used as a preamplifier, digital-to-analog converter (DAC) and digital signal processor (EQ, [Dirac room correction](https://www.dirac.com)).
+
+This Homebridge plugin allows you to change the volume, input source, DSP preset and Dirac status right from your iPhone/iPad/Mac/Watch. 
 
 ## Screenshots
 
