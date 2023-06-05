@@ -1,4 +1,3 @@
-import { resolveNaptr } from 'dns';
 import * as homebridge from 'homebridge';
 import fetch, { FetchError } from 'node-fetch';
 
