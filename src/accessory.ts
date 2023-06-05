@@ -171,11 +171,8 @@ export class MiniDSPAccessory {
         this.updater.queueMasterStatusUpdate();
 
         if(input.snapcast) {
-          const snap = new SnapController();
-
-          for (const command of input.snapcast) {
-            snap.groupSetStream(this.config.snapcastServerURL, command.method, command.params);
-          }
+          const snap = new SnapController(this.log, this.config.snapcastServerURL);
+          snap.processCommandList(input.snapcast); // Non-blocking
         }
       });
   }

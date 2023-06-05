@@ -162,7 +162,6 @@ export class MiniDSPUpdater {
         }
       }
     } catch (error) {
-      this.log.error('Other error');
       this.targetMasterStatusAccepted = false;
 
       if(error instanceof FetchError) {
