@@ -1,0 +1,140 @@
+{
+    "bridge": {
+        "name": "DevelopmentLocal",
+        "username": "CC:22:3D:E3:CE:40",
+        "port": 51050,
+        "pin": "111-22-333"
+    },
+    "description": "Development",
+    "platforms": [
+        {
+            "name": "Config",
+            "port": 8581,
+            "platform": "config"
+        },
+        {
+            "sources": {
+                "flex": {
+                    "type": "miniDSP",
+                    "displayName": "miniDSP Flex Living",
+                    "serverURL": "http://192.168.178.53:5380",
+                    "inputs": {
+                        "streamer": {
+                            "displayName": "Streamer",
+                            "source": "Usb",
+                            "gain": 0
+                        },
+                        "projector": {
+                            "displayName": "Projector",
+                            "source": "Toslink",
+                            "gain": 6
+                        },
+                        "vinylAnalog": {
+                            "displayName": "Vinyl",
+                            "source": "Analog",
+                            "gain": 10
+                        },
+                        "vinylUSB": {
+                            "displayName": "Vinyl Multiroom",
+                            "source": "Usb",
+                            "gain": 6
+                        },
+                        "miniDisc": {
+                            "displayName": "MiniDisc",
+                            "source": "Spdif",
+                            "gain": 0
+                        }
+                    }
+                },
+                "snapcast": {
+                    "type": "snapcast",
+                    "displayName": "Snapcast Server",
+                    "serverURL": "http://192.168.178.74:1780",
+                    "inputs": {
+                        "spotify": {
+                            "displayName": "Spotify",
+                            "source": "pipe:///tmp/spotify?name=Spotify&mode=create&dryout_ms=2000&sampleformat=44100:16:2"
+                        },
+                        "vinyl": {
+                            "displayName": "Vinyl",
+                            "source": "alsa:///?name=Vinyl&device=hw:CARD=CODEC,DEV=0&send_silence=false&idle_threshold=5000&silence_threshold_percent=5.0&sampleformat=48000:16:2"
+                        },
+                        "miniDisc": {
+                            "displayName": "MiniDisc",
+                            "source": "alsa:///?name=MiniDisc&device=hw:CARD=sndrpihifiberry,DEV=0&send_silence=false&idle_threshold=1000&sampleformat=44100:16:2"
+                        },
+                        "library": {
+                            "displayName": "Music Library",
+                            "source": "pipe:///tmp/mpd.fifo?name=MPD&mode=read&sampleformat=44100:16:2"
+                        }
+                    }
+                }
+            },
+            "rooms": {
+                "living": {
+                    "displayName": "Living Room",
+                    "players": [
+                        {
+                            "sources": [
+                                {
+                                    "source": "flex.projector"
+                                },
+                                {
+                                    "source": "snapcast.spotify"
+                                },
+                                {
+                                    "source": "snapcast.vinyl",
+                                    "alternativeDirectSource": "flex.vinylAnalog"
+                                },
+                                {
+                                    "source": "snapcast.miniDisc",
+                                    "alternativeDirectSource": "flex.miniDisc"
+                                },
+                                {
+                                    "source": "snapcast.library"
+                                }
+                           ]
+                        }
+                    ]
+                },
+                "study": {
+                    "displayName": "Study",
+                    "sources": [
+                        {
+                            "source": ""
+                        }
+                    ]
+                },
+                "kitchen": {
+                    "displayName": "Kitchen"
+                }
+            },
+            "name": "Stereo Dev",
+            "dspName": "DSP Dev",
+            "platform": "MiniDSPHomebridgePlugin",
+            "volumeControl": {
+                "maximumDSPVolume": -10,
+                "minimumDSPVolume": -80
+            },
+            "presets": [
+                {
+                    "displayName": "Default",
+                    "preset": 1
+                },
+                {
+                    "displayName": "Bass +3db",
+                    "preset": 2
+                },
+                {
+                    "displayName": "Bass +6db",
+                    "preset": 3
+                },
+                {
+                    "displayName": "NAD Curve",
+                    "preset": 4
+                }
+            ]
+        }
+    ],
+    "accessories": []
+}
