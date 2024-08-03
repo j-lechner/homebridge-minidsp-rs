@@ -1,7 +1,8 @@
 import * as homebridge from 'homebridge';
 import { MiniDSPMasterStatus } from './status';
 import { MiniDSPUpdater } from './updater';
-import { MiniDSPAccessory } from './accessory';
+import { MiniDSPAccessory } from './accessory-minidsp';
+import { SnapcastAccessory } from './accessory-snapcast';
 
 const PLATFORM_NAME = 'MiniDSPHomebridgePlugin';
 
@@ -12,6 +13,7 @@ export = (api: homebridge.API) => {
 class MiniDSPPlatform implements homebridge.DynamicPlatformPlugin {
   public readonly Service: typeof homebridge.Service = this.api.hap.Service;
   public readonly Characteristic: typeof homebridge.Characteristic = this.api.hap.Characteristic;
+  public dspType;
   public updater;
   public masterStatus;
 
@@ -23,15 +25,28 @@ class MiniDSPPlatform implements homebridge.DynamicPlatformPlugin {
     public readonly config: homebridge.PlatformConfig,
     public readonly api: homebridge.API) {
 
-    this.masterStatus = new MiniDSPMasterStatus();
-    this.masterStatus.readFromDisk(this.api.user.storagePath() + '/status.json');
+    this.dspType = 'miniDSP';
+    if('dspType' in this.config) {
+      this.dspType = this.config.dspType;
+    }
 
-    this.updater = new MiniDSPUpdater(log, this.config.miniDSPServerURL, this.masterStatus);
+    if(this.dspType === 'miniDSP') {
+      this.masterStatus = new MiniDSPMasterStatus();
+      this.masterStatus.readFromDisk(this.api.user.storagePath() + '/status.json');
 
-    const base = new MiniDSPAccessory(log, config, api, this.masterStatus, this.updater, false);
-    const bla = new MiniDSPAccessory(log, config, api, this.masterStatus, this.updater, true);
+      this.updater = new MiniDSPUpdater(log, this.config.miniDSPServerURL, this.masterStatus);
 
-    this.api.publishExternalAccessories('homebridge-mindsp-rs', [base.accessory, bla.accessory]);
+      const inputsAndVolume = new MiniDSPAccessory(log, config, api, this.masterStatus, this.updater, false);
+      const dspAndPresets = new MiniDSPAccessory(log, config, api, this.masterStatus, this.updater, true);
+
+      this.api.publishExternalAccessories('homebridge-mindsp-rs', [inputsAndVolume.accessory, dspAndPresets.accessory]);
+
+    } else if(this.dspType === 'Snapcast') {
+      const dsp = new SnapcastAccessory(log, config, api);
+
+      this.api.publishExternalAccessories('homebridge-mindsp-rs', [dsp.accessory]);
+
+    }
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars

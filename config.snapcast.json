@@ -17,29 +17,38 @@
             "dspName": "DSP Dev",
             "platform": "MiniDSPHomebridgePlugin",
             "miniDSPServerURL": "http://192.168.178.53:5380",
-            "snapcastServerURL": "http://192.168.178.74:1780",
+            "snapcastServerURL": "http://192.168.178.33:1780",
             "volumeControl": {
                 "maximumDSPVolume": -10,
-                "minimumDSPVolume": -80
+                "minimumDSPVolume": -70
             },
             "inputs": [
                 {
                     "displayName": "Streamer",
-                    "source": "Usb",
+                    "source": "Spdif",
                     "gain": 0,
                     "snapcast": [
                         {
+                            "comment": "Living",
                             "method": "Group.SetStream",
                             "params": {
-                                "id": "6ad0f95f-feab-9522-fba3-201acbf51e70",
+                                "id": "c6a21b5c-c31e-bfab-4b1d-c2e304444718",
                                 "stream_id": "Spotify"
                             }
-                        },
+                        }
+                    ]
+                },
+                {
+                    "displayName": "AirPlay",
+                    "source": "Spdif",
+                    "gain": 0,
+                    "snapcast": [
                         {
+                            "comment": "Living",
                             "method": "Group.SetStream",
                             "params": {
-                                "id": "6d136a86-6803-75b0-0f09-d24cec5cae2f",
-                                "stream_id": "Spotify"
+                                "id": "c6a21b5c-c31e-bfab-4b1d-c2e304444718",
+                                "stream_id": "AirPlay"
                             }
                         }
                     ]
@@ -47,29 +56,56 @@
                 {
                     "displayName": "Projector",
                     "source": "Toslink",
-                    "gain": 6
+                    "gain": 6,
+                    "snapcast": [
+                        {
+                            "comment": "Living",
+                            "method": "Group.SetStream",
+                            "params": {
+                                "id": "c6a21b5c-c31e-bfab-4b1d-c2e304444718",
+                                "stream_id": "Spotify"
+                            }
+                        }
+                    ]
                 },
                 {
                     "displayName": "Vinyl",
                     "source": "Analog",
-                    "gain": 10
+                    "gain": 10,
+                    "snapcast": [
+                        {
+                            "comment": "Living",
+                            "method": "Group.SetStream",
+                            "params": {
+                                "id": "c6a21b5c-c31e-bfab-4b1d-c2e304444718",
+                                "stream_id": "Vinyl"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "displayName": "Server",
+                    "source": "Usb",
+                    "gain": 0
                 },
                 {
                     "displayName": "Vinyl Multiroom",
-                    "source": "Usb",
+                    "source": "Spdif",
                     "gain": 6,
                     "snapcast": [
                         {
+                            "comment": "Living",
                             "method": "Group.SetStream",
                             "params": {
-                                "id": "6ad0f95f-feab-9522-fba3-201acbf51e70",
+                                "id": "c6a21b5c-c31e-bfab-4b1d-c2e304444718",
                                 "stream_id": "Vinyl"
                             }
                         },
                         {
+                            "comment": "Study",
                             "method": "Group.SetStream",
                             "params": {
-                                "id": "6d136a86-6803-75b0-0f09-d24cec5cae2f",
+                                "id": "286ed8b9-5556-5f65-6289-5b63d0acc2c5",
                                 "stream_id": "Vinyl"
                             }
                         }
@@ -78,7 +114,47 @@
                 {
                     "displayName": "MiniDisc",
                     "source": "Spdif",
-                    "gain": 0
+                    "gain": 0,
+                    "snapcast": [
+                        {
+                            "comment": "Living",
+                            "method": "Group.SetStream",
+                            "params": {
+                                "id": "c6a21b5c-c31e-bfab-4b1d-c2e304444718",
+                                "stream_id": "MiniDisc"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "displayName": "CD",
+                    "source": "Spdif",
+                    "gain": 0,
+                    "snapcast": [
+                        {
+                            "comment": "Living",
+                            "method": "Group.SetStream",
+                            "params": {
+                                "id": "c6a21b5c-c31e-bfab-4b1d-c2e304444718",
+                                "stream_id": "CD"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "displayName": "Foobar",
+                    "source": "Spdif",
+                    "gain": 0,
+                    "snapcast": [
+                        {
+                            "comment": "Living",
+                            "method": "Group.SetStream",
+                            "params": {
+                                "id": "c6a21b5c-c31e-bfab-4b1d-c2e304444718",
+                                "stream_id": "Foobar"
+                            }
+                        }
+                    ]
                 }
             ],
             "presets": [
@@ -87,16 +163,105 @@
                     "preset": 1
                 },
                 {
-                    "displayName": "Bass +3db",
+                    "displayName": "Bass +8db",
                     "preset": 2
                 },
                 {
-                    "displayName": "Bass +6db",
+                    "displayName": "Bass +4db",
                     "preset": 3
                 },
                 {
                     "displayName": "NAD Curve",
                     "preset": 4
+                }
+            ]
+        },
+        {
+            "name": "Study",
+            "dspType": "Snapcast",
+            "platform": "MiniDSPHomebridgePlugin",
+            "snapcastServerURL": "http://192.168.178.33:1780",
+            "volumeControl": {
+                "clientId": "d8:3a:dd:73:d4:ea"
+            },
+            "inputs": [
+                {
+                    "displayName": "Spotify",
+                    "snapcast": [
+                        {
+                            "comment": "Study",
+                            "method": "Group.SetStream",
+                            "params": {
+                                "id": "031a7cae-8020-ab17-ca58-b4a056e84830",
+                                "stream_id": "Spotify"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "displayName": "AirPlay",
+                    "snapcast": [
+                        {
+                            "comment": "Study",
+                            "method": "Group.SetStream",
+                            "params": {
+                                "id": "031a7cae-8020-ab17-ca58-b4a056e84830",
+                                "stream_id": "AirPlay"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "displayName": "Vinyl",
+                    "snapcast": [
+                        {
+                            "comment": "Study",
+                            "method": "Group.SetStream",
+                            "params": {
+                                "id": "031a7cae-8020-ab17-ca58-b4a056e84830",
+                                "stream_id": "Vinyl"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "displayName": "MiniDisc",
+                    "snapcast": [
+                        {
+                            "comment": "Study",
+                            "method": "Group.SetStream",
+                            "params": {
+                                "id": "031a7cae-8020-ab17-ca58-b4a056e84830",
+                                "stream_id": "MiniDisc"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "displayName": "Foobar",
+                    "snapcast": [
+                        {
+                            "comment": "Study",
+                            "method": "Group.SetStream",
+                            "params": {
+                                "id": "031a7cae-8020-ab17-ca58-b4a056e84830",
+                                "stream_id": "Foobar"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "displayName": "CD",
+                    "snapcast": [
+                        {
+                            "comment": "Study",
+                            "method": "Group.SetStream",
+                            "params": {
+                                "id": "031a7cae-8020-ab17-ca58-b4a056e84830",
+                                "stream_id": "CD"
+                            }
+                        }
+                    ]
                 }
             ]
         }
