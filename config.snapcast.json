@@ -177,7 +177,7 @@
             ]
         },
         {
-            "name": "Study",
+            "name": "Study Dev",
             "dspType": "Snapcast",
             "platform": "MiniDSPHomebridgePlugin",
             "snapcastServerURL": "http://192.168.178.33:1780",

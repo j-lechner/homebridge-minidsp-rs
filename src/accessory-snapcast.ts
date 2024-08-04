@@ -27,35 +27,37 @@ export class SnapcastAccessory {
       .setCharacteristic(this.Characteristic.Manufacturer, 'Snapcast')
       .setCharacteristic(this.Characteristic.Model, 'HomeKit Controller');
 
-    this.setupVolumeControlEmbedded();
-
-    // const test1 = new this.Service.Television(tvName, 'One');
     this.televisionService = this.accessory.addService(this.Service.Television);
+    this.televisionService.setPrimaryService(true);
     this.televisionService
       .setCharacteristic(this.Characteristic.ConfiguredName, tvName)
       .setCharacteristic(this.Characteristic.SleepDiscoveryMode, this.Characteristic.SleepDiscoveryMode.NOT_DISCOVERABLE)
       .setCharacteristic(this.Characteristic.PowerModeSelection, this.Characteristic.PowerModeSelection.HIDE);
 
-    // this.televisionService.getCharacteristic(this.Characteristic.Active)
-    //   .onSet((newValue) => {
-    //     this.log.info('set Active => setNewValue: ' + newValue);
+    this.televisionService.getCharacteristic(this.Characteristic.Active)
+      .onSet((newValue) => {
+        this.log.info('set Active => setNewValue: ' + newValue);
 
-    //     if(newValue === 1) {
-    //       this.updater.enableUpdater();
-    //     } else {
-    //       this.updater.disableUpdater();
-    //     }
-    //   });
+        //     if(newValue === 1) {
+        //       this.updater.enableUpdater();
+        //     } else {
+        //       this.updater.disableUpdater();
+        //     }
+      });
 
     this.setupWithInputs();
+
+    this.setupVolumeControlEmbedded();
+
   }
 
   setupVolumeControlEmbedded () {
     const restoredVolume = 70;
 
     this.volumeService = this.accessory.addService(this.Service.Lightbulb);
-    this.volumeService.setCharacteristic(this.Characteristic.Name, 'Volume');
+    this.volumeService.setCharacteristic(this.Characteristic.Name, 'Volume' + (this.config.name as string));
     this.volumeService.setCharacteristic(this.Characteristic.Brightness, restoredVolume);
+    this.televisionService.addLinkedService(this.volumeService);
 
     // handle volume control
     this.volumeService.getCharacteristic(this.Characteristic.Brightness)

@@ -33,12 +33,9 @@ export class MiniDSPAccessory {
       .setCharacteristic(this.Characteristic.Manufacturer, 'MiniDSP')
       .setCharacteristic(this.Characteristic.Model, 'Flex');
 
-    if(!presets) {
-      this.setupVolumeControlEmbedded();
-    }
-
     // const test1 = new this.Service.Television(tvName, 'One');
     this.televisionService = this.accessory.addService(this.Service.Television);
+    this.televisionService.setPrimaryService(true);
     this.televisionService
       .setCharacteristic(this.Characteristic.ConfiguredName, tvName)
       .setCharacteristic(this.Characteristic.SleepDiscoveryMode, this.Characteristic.SleepDiscoveryMode.NOT_DISCOVERABLE)
@@ -60,6 +57,7 @@ export class MiniDSPAccessory {
       this.setupDiracSwitch();
     } else {
       this.setupWithInputs();
+      this.setupVolumeControlEmbedded();
     }
   }
 
@@ -106,8 +104,9 @@ export class MiniDSPAccessory {
     const restoredVolume = this.AbsoluteVolumeFromDSPVolumeWithGain(this.masterStatus.volume);
 
     this.volumeService = this.accessory.addService(this.Service.Lightbulb);
-    this.volumeService.setCharacteristic(this.Characteristic.Name, 'Volume');
+    this.volumeService.setCharacteristic(this.Characteristic.Name, 'Volume' + (this.config.name as string));
     this.volumeService.setCharacteristic(this.Characteristic.Brightness, restoredVolume);
+    this.televisionService.addLinkedService(this.volumeService);
 
     // handle volume control
     this.volumeService.getCharacteristic(this.Characteristic.Brightness)
