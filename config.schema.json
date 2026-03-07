@@ -1,15 +1,150 @@
 {
   "pluginAlias": "MiniDSPHomebridgePlugin",
   "pluginType": "platform",
-  "singular": true,
+  "singular": false,
   "schema": {
     "type": "object",
     "properties": {
       "name": {
         "title": "Name",
+        "description": "Name for the inputs/volume TV accessory",
         "type": "string",
-        "required": true,
-        "default": "Example Dynamic Platform"
+        "required": true
+      },
+      "dspType": {
+        "title": "DSP Type",
+        "description": "Type of device to control. Defaults to miniDSP if omitted.",
+        "type": "string",
+        "enum": ["miniDSP", "Snapcast"],
+        "default": "miniDSP"
+      },
+      "dspName": {
+        "title": "DSP Name",
+        "description": "Name for the DSP presets TV accessory (miniDSP only)",
+        "type": "string"
+      },
+      "miniDSPServerURL": {
+        "title": "MiniDSP Server URL",
+        "description": "HTTP URL of the minidsp-rs server (miniDSP only)",
+        "type": "string",
+        "format": "uri"
+      },
+      "snapcastServerURL": {
+        "title": "Snapcast Server URL",
+        "description": "HTTP URL of the Snapcast server",
+        "type": "string",
+        "format": "uri"
+      },
+      "volumeControl": {
+        "title": "Volume Control",
+        "type": "object",
+        "properties": {
+          "maximumDSPVolume": {
+            "title": "Maximum DSP Volume (dB)",
+            "description": "Upper volume limit as a negative dB value, e.g. -10 (miniDSP only)",
+            "type": "number"
+          },
+          "minimumDSPVolume": {
+            "title": "Minimum DSP Volume (dB)",
+            "description": "Lower volume limit as a negative dB value, e.g. -70 (miniDSP only)",
+            "type": "number"
+          },
+          "clientId": {
+            "title": "Snapcast Client ID",
+            "description": "Snapcast client identifier used for volume control (Snapcast only)",
+            "type": "string"
+          }
+        }
+      },
+      "inputs": {
+        "title": "Inputs",
+        "type": "array",
+        "items": {
+          "title": "Input",
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "title": "Display Name",
+              "type": "string",
+              "required": true
+            },
+            "source": {
+              "title": "Source",
+              "description": "Physical input source on the MiniDSP (miniDSP only)",
+              "type": "string",
+              "enum": ["Analog", "Toslink", "Spdif", "Usb", "Rca", "Bluetooth"]
+            },
+            "gain": {
+              "title": "Gain (dB)",
+              "description": "Input gain offset in dB (miniDSP only)",
+              "type": "number"
+            },
+            "comment": {
+              "title": "Comment",
+              "type": "string"
+            },
+            "snapcast": {
+              "title": "Snapcast Commands",
+              "description": "JSON-RPC commands sent to Snapcast when this input is selected",
+              "type": "array",
+              "items": {
+                "title": "Snapcast Command",
+                "type": "object",
+                "properties": {
+                  "comment": {
+                    "title": "Comment",
+                    "type": "string"
+                  },
+                  "method": {
+                    "title": "Method",
+                    "description": "Snapcast JSON-RPC method, e.g. Group.SetStream",
+                    "type": "string",
+                    "required": true
+                  },
+                  "params": {
+                    "title": "Parameters",
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "title": "Group ID",
+                        "description": "Snapcast group UUID",
+                        "type": "string"
+                      },
+                      "stream_id": {
+                        "title": "Stream ID",
+                        "description": "Snapcast stream name",
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "presets": {
+        "title": "Presets",
+        "description": "DSP presets shown in the presets TV accessory (miniDSP only)",
+        "type": "array",
+        "items": {
+          "title": "Preset",
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "title": "Display Name",
+              "type": "string",
+              "required": true
+            },
+            "preset": {
+              "title": "Preset Number",
+              "description": "MiniDSP preset slot number (1–4)",
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 4
+            }
+          }
+        }
       }
     }
   }
