@@ -95,7 +95,7 @@ export class MiniDSPAccessory {
         this.log.info('set DiracSwitch => setNewValue: ' + newValue);
 
         this.masterStatus.dirac = newValue;
-        this.masterStatus.writeToDisk(this.api.user.storagePath() + '/status.json');
+        this.masterStatus.writeToDisk(this.api.user.storagePath() + '/status-' + this.config.name + '.json');
         this.updater.queueMasterStatusUpdate();
       });
   }
@@ -115,7 +115,7 @@ export class MiniDSPAccessory {
 
         const targetVolumeDSP = this.DSPVolumeWithGainFromAbsoluteVolume(newValue);
         this.masterStatus.volume = targetVolumeDSP;
-        this.masterStatus.writeToDisk(this.api.user.storagePath() + '/status.json');
+        this.masterStatus.writeToDisk(this.api.user.storagePath() + '/status-' + this.config.name + '.json');
         this.updater.queueMasterStatusUpdate();
       });
   }
@@ -166,7 +166,7 @@ export class MiniDSPAccessory {
         this.masterStatus.volume = this.DSPVolumeWithGainFromAbsoluteVolume(currentVolume);
         this.log.info('targetVolume:' + this.masterStatus.volume);
 
-        this.masterStatus.writeToDisk(this.api.user.storagePath() + '/status.json');
+        this.masterStatus.writeToDisk(this.api.user.storagePath() + '/status-' + this.config.name + '.json');
         this.updater.queueMasterStatusUpdate();
 
         if(input.snapcast) {
@@ -205,7 +205,7 @@ export class MiniDSPAccessory {
         this.log.info(dump);
 
         this.masterStatus.preset = newValue;
-        this.masterStatus.writeToDisk(this.api.user.storagePath() + '/status.json');
+        this.masterStatus.writeToDisk(this.api.user.storagePath() + '/status-' + this.config.name + '.json');
         this.updater.queueMasterStatusUpdate();
       });
   }

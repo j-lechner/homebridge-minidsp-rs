@@ -13,39 +13,34 @@ export = (api: homebridge.API) => {
 class MiniDSPPlatform implements homebridge.DynamicPlatformPlugin {
   public readonly Service: typeof homebridge.Service = this.api.hap.Service;
   public readonly Characteristic: typeof homebridge.Characteristic = this.api.hap.Characteristic;
-  public dspType;
-  public updater;
-  public masterStatus;
-
-  private tvAccessory;
-  private tvService;
 
   constructor(
     public readonly log: homebridge.Logger,
     public readonly config: homebridge.PlatformConfig,
     public readonly api: homebridge.API) {
 
-    this.dspType = 'miniDSP';
-    if('dspType' in this.config) {
-      this.dspType = this.config.dspType;
-    }
+    const devices: homebridge.PlatformConfig[] = this.config.devices ?? [];
 
-    if(this.dspType === 'miniDSP') {
-      this.masterStatus = new MiniDSPMasterStatus();
-      this.masterStatus.readFromDisk(this.api.user.storagePath() + '/status.json');
+    for(const device of devices) {
+      const dspType = device.dspType ?? 'miniDSP';
 
-      this.updater = new MiniDSPUpdater(log, this.config.miniDSPServerURL, this.masterStatus);
+      if(dspType === 'miniDSP') {
+        const masterStatus = new MiniDSPMasterStatus();
+        masterStatus.readFromDisk(this.api.user.storagePath() + '/status-' + device.name + '.json');
 
-      const inputsAndVolume = new MiniDSPAccessory(log, config, api, this.masterStatus, this.updater, false);
-      const dspAndPresets = new MiniDSPAccessory(log, config, api, this.masterStatus, this.updater, true);
+        const updater = new MiniDSPUpdater(log, device.miniDSPServerURL, masterStatus);
 
-      this.api.publishExternalAccessories('homebridge-mindsp-rs', [inputsAndVolume.accessory, dspAndPresets.accessory]);
+        const inputsAndVolume = new MiniDSPAccessory(log, device, api, masterStatus, updater, false);
+        const dspAndPresets = new MiniDSPAccessory(log, device, api, masterStatus, updater, true);
 
-    } else if(this.dspType === 'Snapcast') {
-      const dsp = new SnapcastAccessory(log, config, api);
+        this.api.publishExternalAccessories('homebridge-minidsp-rs', [inputsAndVolume.accessory]);
+        this.api.publishExternalAccessories('homebridge-minidsp-rs', [dspAndPresets.accessory]);
 
-      this.api.publishExternalAccessories('homebridge-mindsp-rs', [dsp.accessory]);
+      } else if(dspType === 'Snapcast') {
+        const dsp = new SnapcastAccessory(log, device, api);
 
+        this.api.publishExternalAccessories('homebridge-minidsp-rs', [dsp.accessory]);
+      }
     }
   }
 
